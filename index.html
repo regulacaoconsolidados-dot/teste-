@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Guia Rápido - Ferramenta OCI v7.0</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Arial', sans-serif;
+        background: white;
+        padding: 20px;
+        color: #0f172a;
+    }
+    .page {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border: 3px solid #0a1929;
+        border-radius: 20px;
+        padding: 30px;
+    }
+    .header {
+        background: linear-gradient(135deg, #0a1929, #1a3a4a);
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .header h1 { font-size: 28px; margin-bottom: 5px; }
+    .header p { font-size: 12px; opacity: 0.8; }
+    .section {
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+        page-break-inside: avoid;
+    }
+    .section-title {
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #3b82f6;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #f1f5f9;
+    }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .info-box {
+        background: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        padding: 10px 12px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+    }
+    .info-box strong { color: #0f172a; }
+    .info-box p { font-size: 12px; color: #475569; margin-top: 3px; }
+    .badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-yellow { background: #fef3c7; color: #92400e; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-gray { background: #f1f5f9; color: #475569; }
+    .step {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 8px;
+    }
+    .step-num {
+        background: #3b82f6;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+    .step p { font-size: 12px; color: #334155; padding-top: 4px; }
+    .alert-rules {
+        background: #fffbeb;
+        border-left: 4px solid #f59e0b;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 12px;
+    }
+    .footer {
+        background: linear-gradient(135deg, #0a1929, #1a3a4a);
+        color: white;
+        padding: 15px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 11px;
+        margin-top: 15px;
+    }
+    @media print {
+        body { padding: 0; }
+        .page { border: none; box-shadow: none; }
+    }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🏥 FERRAMENTA OCI v7.0</h1>
+        <p>GUIA RÁPIDO DO OPERADOR</p>
+        <p style="margin-top: 8px; font-size: 10px;">
+            👑 Ana Paula Araújo da Silva | Mat: 201704
+        </p>
+    </div>
+
+    <!-- ACESSOS -->
+    <div class="section">
+        <div class="section-title">🌐 Acessos Rápidos</div>
+        <div class="grid-2">
+            <div class="info-box">
+                <strong>🖥️ Painel OCI</strong>
+                <p>Gestão e Monitoramento</p>
+                <p><em>[colar URL aqui]</em></p>
+                <p>Login: Nome + CPF + Senha</p>
+            </div>
+            <div class="info-box" style="border-left-color: #10b981;">
+                <strong>🌐 Portal do Retorno</strong>
+                <p>Recepção e Exames</p>
+                <p><em>[colar URL aqui]</em></p>
+                <p>Login: CPF + Senha</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLUXO -->
+    <div class="section">
+        <div class="section-title">🔄 Fluxo do Paciente (Linha do Cuidado)</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 11px;">
+            <span class="badge badge-yellow">1️⃣ AGENDADA</span>
+            <span class="badge badge-yellow">2️⃣ RECEPCIONADA</span>
+            <span class="badge badge-yellow">3️⃣ AG. EXAME</span>
+            <span class="badge badge-yellow">4️⃣ APTO RETORNO</span>
+            <span class="badge badge-yellow">5️⃣ RET. AGENDADO</span>
+            <span class="badge badge-yellow">6️⃣ RET. RECEPC.</span>
+            <span class="badge badge-green">7️⃣ OCI FECHADA</span>
+            <span class="badge badge-green">8️⃣ APAC GERADA</span>
+        </div>
+        <div style="margin-top: 10px; font-size: 11px; color: #64748b;">
+            <span class="badge badge-red">🚫 FALTOU</span>
+            <span class="badge badge-red">❌ CANCELADA</span>
+            <span class="badge badge-red">🔄 TRANSFERIDA</span>
+        </div>
+    </div>
+
+    <!-- SINCRONIZAR -->
+    <div class="section">
+        <div class="section-title">📥 Sincronizar a Planilha (2x ao dia)</div>
+        <div class="step">
+            <div class="step-num">1</div>
+            <p>Abra a planilha do Vivver (Google Sheets)</p>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <p>No menu, clique em <strong>🏥 Sistema OCI v7.0</strong></p>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <p>Clique em <strong>📤 Sincronizar com Supabase</strong></p>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <p>Aguarde a mensagem de sucesso aparecer</p>
+        </div>
+    </div>
+
+    <!-- SOLICITAR RETORNO -->
+    <div class="section">
+        <div class="section-title">📤 Solicitar Retorno (Portal)</div>
+        <div class="step">
+            <div class="step-num">1</div>
+            <p>Digite o <strong>Nº da 1ª consulta</strong> no campo de busca</p>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <p>Confira os dados preenchidos automaticamente</p>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <p>Selecione o <strong>SubGrupo SIGTAP</strong></p>
+        </div>
+        <div class="step">
+            <div class="step-num">4</div>
+            <p>Clique em <strong>🧪 Selecionar Exames</strong></p>
+        </div>
+        <div class="step">
+            <div class="step-num">5</div>
+            <p>Marque os exames e preencha as datas</p>
+        </div>
+        <div class="step">
+            <div class="step-num">6</div>
+            <p>Clique em <strong>✅ VALIDAR E SOLICITAR RETORNO</strong></p>
+        </div>
+    </div>
+
+    <!-- ALERTAS -->
+    <div class="section">
+        <div class="section-title">🚨 Alertas de Prazo</div>
+        <div class="grid-2">
+            <div>
+                <span class="badge badge-red">🔴 VENCIDO</span>
+                <p style="font-size: 11px; margin: 5px 0;">Prazo estourou. Aja JÁ!</p>
+                <span class="badge badge-yellow">🟡 ATENÇÃO</span>
+                <p style="font-size: 11px; margin: 5px 0;">≤ 15 dias. Monitore.</p>
+            </div>
+            <div>
+                <span class="badge badge-green">🟢 NORMAL</span>
+                <p style="font-size: 11px; margin: 5px 0;">> 15 dias. Tranquilo.</p>
+                <span class="badge badge-gray">⚪ FINALIZADO</span>
+                <p style="font-size: 11px; margin: 5px 0;">Sem ação necessária.</p>
+            </div>
+        </div>
+        <p style="margin-top: 10px; font-size: 11px; color: #64748b;">
+            <strong>Prazos:</strong> Oncologia = 30 dias | Outras = 60 dias
+        </p>
+    </div>
+
+    <!-- REGRAS -->
+    <div class="section">
+        <div class="section-title">⚠️ Regras de Ouro</div>
+        <div class="alert-rules">
+            <p style="margin-bottom: 5px;">❌ Oftalmologia NÃO solicita retorno (fecha direto)</p>
+            <p style="margin-bottom: 5px;">❌ Portal NÃO cria novo número (fica no mesmo)</p>
+            <p style="margin-bottom: 5px;">❌ Não regride status (sistema nunca volta etapa)</p>
+            <p style="margin-bottom: 5px;">❌ Dados do paciente NÃO podem ser editados</p>
+            <p style="margin-bottom: 5px;">✅ Sincronize a planilha 2x ao dia</p>
+            <p>✅ Confira os alertas 🔴 TODOS os dias</p>
+        </div>
+    </div>
+
+    <!-- PROBLEMAS -->
+    <div class="section">
+        <div class="section-title">🆘 Problemas Comuns</div>
+        <div class="grid-2" style="font-size: 11px;">
+            <div class="info-box">
+                <strong>Dados não carregam?</strong>
+                <p>Clique em 🔄 ATUALIZAR</p>
+            </div>
+            <div class="info-box">
+                <strong>Esqueci a senha?</strong>
+                <p>🔑 Esqueci + código do gestor</p>
+            </div>
+            <div class="info-box">
+                <strong>Nº não encontrado?</strong>
+                <p>Confira se está RECEPCIONADA</p>
+            </div>
+            <div class="info-box">
+                <strong>Erro no Sincronizador?</strong>
+                <p>Verifique o cabeçalho da planilha</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        📞 SUPORTE: [inserir contato] | 📧 [inserir e-mail]
+        <br><br>
+        💡 Sistema desenvolvido por Ana Paula Araújo da Silva | Mat: 201704
+    </div>
+
+</div>
+
+</body>
+</html>
