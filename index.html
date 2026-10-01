@@ -1,427 +1,841 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia Rápido - Ferramenta OCI v7.0</title>
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-        font-family: 'Arial', sans-serif;
-        background: #f1f5f9;
-        padding: 20px;
-        color: #0f172a;
-    }
-    .page {
-        max-width: 850px;
-        margin: 0 auto;
-        background: white;
-        border: 3px solid #0a1929;
-        border-radius: 20px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    .header {
-        background: linear-gradient(135deg, #0a1929, #1a3a4a);
-        color: white;
-        padding: 20px;
-        border-radius: 15px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .header h1 { font-size: 28px; margin-bottom: 5px; }
-    .header p { font-size: 12px; opacity: 0.8; }
-    .section {
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 15px;
-        margin-bottom: 15px;
-        page-break-inside: avoid;
-    }
-    .section-title {
-        font-size: 14px;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: #3b82f6;
-        margin-bottom: 10px;
-        padding-bottom: 8px;
-        border-bottom: 2px solid #f1f5f9;
-    }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    
-    /* ===== BOTÕES DE ACESSO ===== */
-    .access-card {
-        background: linear-gradient(135deg, #eff6ff, #dbeafe);
-        border: 2px solid #3b82f6;
-        border-radius: 12px;
-        padding: 15px;
-        transition: all 0.3s;
-    }
-    .access-card.portal {
-        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-        border-color: #10b981;
-    }
-    .access-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(59,130,246,0.2);
-    }
-    .access-card.portal:hover {
-        box-shadow: 0 10px 20px rgba(16,185,129,0.2);
-    }
-    .access-card h3 {
-        font-size: 15px;
-        color: #1e40af;
-        margin-bottom: 4px;
-    }
-    .access-card.portal h3 {
-        color: #065f46;
-    }
-    .access-card .desc {
-        font-size: 11px;
-        color: #475569;
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
-    .access-card .login-info {
-        font-size: 11px;
-        color: #64748b;
-        margin-top: 8px;
-        padding-top: 8px;
-        border-top: 1px dashed #cbd5e1;
-    }
-    
-    /* ===== BOTÃO CLICÁVEL ===== */
-    .btn-access {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        width: 100%;
-        padding: 12px 16px;
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
-        color: white !important;
-        text-decoration: none !important;
-        border-radius: 10px;
-        font-size: 13px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: all 0.3s;
-        box-shadow: 0 4px 10px rgba(59,130,246,0.3);
-        cursor: pointer;
-        border: none;
-    }
-    .btn-access:hover {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(59,130,246,0.4);
-    }
-    .btn-access.portal {
-        background: linear-gradient(135deg, #10b981, #059669);
-        box-shadow: 0 4px 10px rgba(16,185,129,0.3);
-    }
-    .btn-access.portal:hover {
-        background: linear-gradient(135deg, #059669, #047857);
-        box-shadow: 0 6px 15px rgba(16,185,129,0.4);
-    }
-    .btn-access i {
-        font-style: normal;
-        font-size: 16px;
-    }
-    
-    /* ===== URL PARA IMPRESSÃO ===== */
-    .url-print {
-        display: none;
-        font-size: 10px;
-        color: #64748b;
-        word-break: break-all;
-        margin-top: 6px;
-        font-family: monospace;
-        text-align: center;
-        padding: 6px;
-        background: white;
-        border-radius: 6px;
-        border: 1px dashed #cbd5e1;
-    }
-    
-    .badge {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: bold;
-        margin-right: 5px;
-    }
-    .badge-red { background: #fee2e2; color: #991b1b; }
-    .badge-yellow { background: #fef3c7; color: #92400e; }
-    .badge-green { background: #dcfce7; color: #166534; }
-    .badge-gray { background: #f1f5f9; color: #475569; }
-    .step {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        margin-bottom: 8px;
-    }
-    .step-num {
-        background: #3b82f6;
-        color: white;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: bold;
-        flex-shrink: 0;
-    }
-    .step p { font-size: 12px; color: #334155; padding-top: 4px; }
-    .alert-rules {
-        background: #fffbeb;
-        border-left: 4px solid #f59e0b;
-        padding: 12px;
-        border-radius: 8px;
-        font-size: 12px;
-    }
-    .info-box {
-        background: #f8fafc;
-        border-left: 4px solid #3b82f6;
-        padding: 10px 12px;
-        border-radius: 8px;
-        margin-bottom: 8px;
-    }
-    .info-box strong { color: #0f172a; }
-    .info-box p { font-size: 12px; color: #475569; margin-top: 3px; }
-    .footer {
-        background: linear-gradient(135deg, #0a1929, #1a3a4a);
-        color: white;
-        padding: 15px;
-        border-radius: 12px;
-        text-align: center;
-        font-size: 11px;
-        margin-top: 15px;
-    }
-    .footer a {
-        color: #60a5fa !important;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    
-    /* ===== REGRAS DE IMPRESSÃO ===== */
-    @media print {
-        body { 
-            padding: 0; 
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solicitação de Agendamento - Teleconsulta / Atenção Especializada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== RESET E BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f5 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1280px;
+            width: 100%;
+        }
+
+        /* ===== CABEÇALHO ===== */
+        .header {
+            background: linear-gradient(135deg, #0b3b5c 0%, #1a5f7a 40%, #2a7f9c 100%);
+            color: white;
+            padding: 32px 40px;
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 10px 30px rgba(10, 55, 94, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -40%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .header-left .badge {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            align-self: flex-start;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .header h1 i {
+            color: #7fc9ff;
+            margin-right: 12px;
+        }
+
+        .header .diretoria {
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 18px;
+            border-radius: 30px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+        }
+
+        .header-right {
+            text-align: right;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 12px 24px;
+            border-radius: 16px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-right .creditos {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 4px;
+            font-weight: 300;
+        }
+
+        /* ===== BARRA DE TÍTULO DA PÁGINA ===== */
+        .page-title-bar {
             background: white;
+            padding: 18px 32px;
+            border-left: 6px solid #1a5f7a;
+            border-right: 6px solid #1a5f7a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
-        .page { 
-            border: none; 
-            box-shadow: none; 
-            max-width: 100%;
+
+        .page-title-bar .title-main {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0b3b5c;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        /* Esconde o botão e mostra a URL */
-        .btn-access {
-            display: none !important;
+
+        .page-title-bar .title-main i {
+            color: #1a5f7a;
+            background: #e8f0fe;
+            padding: 8px;
+            border-radius: 10px;
         }
-        .url-print {
-            display: block !important;
+
+        /* ===== BOTÃO DESTAQUE REAPROVEITAMENTO ===== */
+        .destaque-section {
+            padding: 40px 30px 10px 30px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
         }
-        .access-card:hover {
-            transform: none;
-            box-shadow: none;
+
+        .destaque-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+            padding: 24px 32px;
+            background: linear-gradient(135deg, #0b3b5c 0%, #1a5f7a 50%, #2a7f9c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 28px rgba(26, 95, 122, 0.35);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.15);
         }
-    }
-</style>
+
+        .destaque-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.6s;
+        }
+
+        .destaque-btn:hover::before {
+            left: 100%;
+        }
+
+        .destaque-btn:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 16px 40px rgba(26, 95, 122, 0.45);
+        }
+
+        .destaque-btn i {
+            font-size: 1.6rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        .destaque-btn .destaque-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+
+        .destaque-btn .destaque-text .titulo {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .destaque-btn .destaque-text .subtitulo {
+            font-size: 0.85rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .destaque-btn .arrow-icon {
+            background: transparent;
+            padding: 0;
+            font-size: 1.2rem;
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+
+        .destaque-btn:hover .arrow-icon {
+            transform: translateX(6px);
+        }
+
+        /* ===== SEÇÕES DE TEMA ===== */
+        .tema-section {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 0 30px;
+        }
+
+        .tema-section:last-of-type {
+            padding-bottom: 40px;
+            border-radius: 0 0 24px 24px;
+        }
+
+        .tema-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 32px 0 8px 0;
+            margin-bottom: 8px;
+        }
+
+        .tema-header .tema-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #e8f4fc, #d4e9f7);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #1a5f7a;
+            flex-shrink: 0;
+        }
+
+        .tema-header .tema-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #0b3b5c;
+            letter-spacing: -0.3px;
+        }
+
+        .tema-header .tema-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #d4e9f7, transparent);
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        /* ===== GRADE DE CARDS ===== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 28px;
+            padding: 20px 0 10px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px 22px 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1a5f7a, #4a9fc7, #1a5f7a);
+            background-size: 200% 100%;
+            transition: all 0.5s;
+            opacity: 0;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(26, 95, 122, 0.15);
+            border-color: rgba(26, 95, 122, 0.2);
+        }
+
+        .card-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #e8f4fc, #d4e9f7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #1a5f7a;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+
+        .card:hover .card-icon-wrapper {
+            background: linear-gradient(135deg, #1a5f7a, #2a7f9c);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #0b2a3d;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-desc {
+            font-size: 0.8rem;
+            color: #7a8a9a;
+            margin-bottom: 18px;
+            line-height: 1.4;
+            min-height: 36px;
+        }
+
+        .card-btn {
+            background: white;
+            color: #1a5f7a;
+            border: 2px solid #d4e9f7;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .card-btn i {
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        .card-btn:hover {
+            background: #1a5f7a;
+            color: white;
+            border-color: #1a5f7a;
+            box-shadow: 0 8px 20px rgba(26, 95, 122, 0.25);
+        }
+
+        .card-btn:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Variação de cores nos cards */
+        .card:nth-child(3n+1) .card-icon-wrapper {
+            background: linear-gradient(135deg, #fef3e8, #fde8d0);
+            color: #c0763a;
+        }
+        .card:nth-child(3n+1):hover .card-icon-wrapper {
+            background: linear-gradient(135deg, #c0763a, #e0944a);
+            color: white;
+        }
+
+        .card:nth-child(3n+2) .card-icon-wrapper {
+            background: linear-gradient(135deg, #e8f4e8, #d0e8d0);
+            color: #3a7a5a;
+        }
+        .card:nth-child(3n+2):hover .card-icon-wrapper {
+            background: linear-gradient(135deg, #3a7a5a, #4a9a6a);
+            color: white;
+        }
+
+        .card:nth-child(3n+3) .card-icon-wrapper {
+            background: linear-gradient(135deg, #f0e8fc, #e0d4f7);
+            color: #6a3a9c;
+        }
+        .card:nth-child(3n+3):hover .card-icon-wrapper {
+            background: linear-gradient(135deg, #6a3a9c, #8a5abc);
+            color: white;
+        }
+
+        /* ===== RODAPÉ ===== */
+        .footer {
+            background: white;
+            padding: 28px 32px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            margin-top: 30px;
+        }
+
+        .footer .footer-brand {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0b3b5c;
+            letter-spacing: -0.3px;
+        }
+
+        .footer .footer-brand i {
+            color: #1a5f7a;
+            margin-right: 8px;
+        }
+
+        .footer .footer-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #1a5f7a, transparent);
+            margin: 10px auto;
+            border-radius: 4px;
+        }
+
+        .footer p {
+            color: #7a8a9a;
+            font-size: 0.85rem;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 24px 20px;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .header-right {
+                text-align: left;
+                width: 100%;
+                padding: 12px 16px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .page-title-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 14px 20px;
+            }
+
+            .page-title-bar .title-main {
+                font-size: 1.1rem;
+            }
+
+            .destaque-section {
+                padding: 24px 16px 0 16px;
+            }
+
+            .destaque-btn {
+                padding: 18px 20px;
+                font-size: 1.1rem;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .destaque-btn .destaque-text .titulo {
+                font-size: 1.05rem;
+            }
+
+            .tema-section {
+                padding: 0 16px;
+            }
+
+            .tema-section:last-of-type {
+                padding-bottom: 24px;
+            }
+
+            .card-grid {
+                padding: 12px 0 6px 0;
+                gap: 20px;
+            }
+
+            .card {
+                padding: 22px 18px;
+            }
+
+            .footer {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                padding: 8px 0;
+            }
+
+            .destaque-btn {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .destaque-btn .destaque-text {
+                align-items: center;
+            }
+
+            .destaque-btn .arrow-icon {
+                margin-left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="page">
+<div class="container">
 
-    <!-- HEADER -->
-    <div class="header">
-        <h1>🏥 FERRAMENTA OCI v7.0</h1>
-        <p>GUIA RÁPIDO DO OPERADOR</p>
-        <p style="margin-top: 8px; font-size: 10px;">
-            👑 Ana Paula Araújo da Silva | Mat: 201704
-        </p>
+    <!-- ===== CABEÇALHO ===== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <span class="badge"><i class="fas fa-phone-alt"></i> Links Rápido - Teleconsulta Atenção Especializada</span>
+                <h1><i class="fas fa-calendar-check"></i>Diretoria de Regulação do Acesso</h1>
+                <span class="diretoria"><i class="fas fa-building"></i> Diretora: Paloma Morais</span>
+            </div>
+            <div class="header-right">
+                <div class="creditos"><i class="fas fa-code"></i> Página criada por Ana Paula Araújo da Silva — Matric. 201704</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== BARRA DE TÍTULO ===== -->
+    <div class="page-title-bar">
+        <div class="title-main">
+            <i class="fas fa-th-large"></i>
+            Teleconsulta Arquivos e Ferramentas
+        </div>
     </div>
 
-    <!-- ACESSOS COM BOTÕES -->
-    <div class="section">
-        <div class="section-title">🌐 Acessos Rápidos</div>
-        <div class="grid-2">
-            
-            <!-- PAINEL OCI -->
-            <div class="access-card">
-                <h3>🖥️ Painel OCI</h3>
-                <p class="desc">Gestão e Monitoramento</p>
-                <a href="https://regulacaoconsolidados-dot.github.io/ferramentaoci-Segunda-vers-o/" 
-                   target="_blank" 
-                   class="btn-access">
-                    <i>🔗</i> ABRIR PAINEL
+    <!-- ===== BOTÃO DESTAQUE: REAPROVEITAMENTO ===== -->
+    <div class="destaque-section">
+        <a href="https://docs.google.com/spreadsheets/d/1_WJhJQQXcxn0Yucyr_rv_HuKs7wc3p4oeb69oyhoPU4/edit?gid=119359330#gid=119359330" target="_blank" class="destaque-btn">
+            <i class="fas fa-pen-fancy"></i>
+            <div class="destaque-text">
+                <span class="titulo">Reaproveitamento Teleconsulta</span>
+                <span class="subtitulo">Oferta por Distrito — Acesse aqui</span>
+            </div>
+            <i class="fas fa-arrow-right arrow-icon"></i>
+        </a>
+    </div>
+
+    <!-- ===== TEMA 1: PLANILHAS PARA LIGAÇÕES POR DISTRITO ===== -->
+    <section class="tema-section">
+        <div class="tema-header">
+            <div class="tema-icon"><i class="fas fa-phone-volume"></i></div>
+            <span class="tema-title">Planilhas para Ligações por Distrito</span>
+            <div class="tema-line"></div>
+        </div>
+
+        <div class="card-grid">
+
+            <!-- Distrito Eldorado -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Eldorado Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=175443153#gid=175443153" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
                 </a>
-                <div class="url-print">
-                    https://regulacaoconsolidados-dot.github.io/ferramentaoci-Segunda-vers-o/
-                </div>
-                <div class="login-info">
-                    🔐 Login: Nome + CPF + Senha (6 dígitos)
-                </div>
             </div>
-            
-            <!-- PORTAL DO RETORNO -->
-            <div class="access-card portal">
-                <h3>🌐 Portal do Retorno</h3>
-                <p class="desc">Recepção e Exames</p>
-                <a href="https://regulacaoconsolidados-dot.github.io/OCI-portal-do-retorno-segunda-vers-o/" 
-                   target="_blank" 
-                   class="btn-access portal">
-                    <i>🔗</i> ABRIR PORTAL
+
+            <!-- Distrito Industrial -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Industrial Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=1574171907#gid=1574171907" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
                 </a>
-                <div class="url-print">
-                    https://regulacaoconsolidados-dot.github.io/OCI-portal-do-retorno-segunda-vers-o/
-                </div>
-                <div class="login-info">
-                    🔐 Login: CPF + Senha (6 dígitos)
-                </div>
             </div>
-            
-        </div>
-    </div>
 
-    <!-- FLUXO -->
-    <div class="section">
-        <div class="section-title">🔄 Fluxo do Paciente (Linha do Cuidado)</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 11px;">
-            <span class="badge badge-yellow">1️⃣ AGENDADA</span>
-            <span class="badge badge-yellow">2️⃣ RECEPCIONADA</span>
-            <span class="badge badge-yellow">3️⃣ AG. EXAME</span>
-            <span class="badge badge-yellow">4️⃣ APTO RETORNO</span>
-            <span class="badge badge-yellow">5️⃣ RET. AGENDADO</span>
-            <span class="badge badge-yellow">6️⃣ RET. RECEPC.</span>
-            <span class="badge badge-green">7️⃣ OCI FECHADA</span>
-            <span class="badge badge-green">8️⃣ APAC GERADA</span>
-        </div>
-        <div style="margin-top: 10px; font-size: 11px; color: #64748b;">
-            <span class="badge badge-red">🚫 FALTOU</span>
-            <span class="badge badge-red">❌ CANCELADA</span>
-            <span class="badge badge-red">🔄 TRANSFERIDA</span>
-        </div>
-    </div>
-
-    <!-- SINCRONIZAR -->
-    <div class="section">
-        <div class="section-title">📥 Sincronizar a Planilha (2x ao dia)</div>
-        <div class="step">
-            <div class="step-num">1</div>
-            <p>Abra a planilha do Vivver (Google Sheets)</p>
-        </div>
-        <div class="step">
-            <div class="step-num">2</div>
-            <p>No menu, clique em <strong>🏥 Sistema OCI v7.0</strong></p>
-        </div>
-        <div class="step">
-            <div class="step-num">3</div>
-            <p>Clique em <strong>📤 Sincronizar com Supabase</strong></p>
-        </div>
-        <div class="step">
-            <div class="step-num">4</div>
-            <p>Aguarde a mensagem de sucesso aparecer</p>
-        </div>
-    </div>
-
-    <!-- SOLICITAR RETORNO -->
-    <div class="section">
-        <div class="section-title">📤 Solicitar Retorno (Portal)</div>
-        <div class="step">
-            <div class="step-num">1</div>
-            <p>Digite o <strong>Nº da 1ª consulta</strong> no campo de busca</p>
-        </div>
-        <div class="step">
-            <div class="step-num">2</div>
-            <p>Confira os dados preenchidos automaticamente</p>
-        </div>
-        <div class="step">
-            <div class="step-num">3</div>
-            <p>Selecione o <strong>SubGrupo SIGTAP</strong></p>
-        </div>
-        <div class="step">
-            <div class="step-num">4</div>
-            <p>Clique em <strong>🧪 Selecionar Exames</strong></p>
-        </div>
-        <div class="step">
-            <div class="step-num">5</div>
-            <p>Marque os exames e preencha as datas</p>
-        </div>
-        <div class="step">
-            <div class="step-num">6</div>
-            <p>Clique em <strong>✅ VALIDAR E SOLICITAR RETORNO</strong></p>
-        </div>
-    </div>
-
-    <!-- ALERTAS -->
-    <div class="section">
-        <div class="section-title">🚨 Alertas de Prazo</div>
-        <div class="grid-2">
-            <div>
-                <span class="badge badge-red">🔴 VENCIDO</span>
-                <p style="font-size: 11px; margin: 5px 0;">Prazo estourou. Aja JÁ!</p>
-                <span class="badge badge-yellow">🟡 ATENÇÃO</span>
-                <p style="font-size: 11px; margin: 5px 0;">≤ 15 dias. Monitore.</p>
+            <!-- Distrito Vargem das Flores -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Vargem das Flores Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=450560883#gid=450560883" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-            <div>
-                <span class="badge badge-green">🟢 NORMAL</span>
-                <p style="font-size: 11px; margin: 5px 0;">> 15 dias. Tranquilo.</p>
-                <span class="badge badge-gray">⚪ FINALIZADO</span>
-                <p style="font-size: 11px; margin: 5px 0;">Sem ação necessária.</p>
-            </div>
-        </div>
-        <p style="margin-top: 10px; font-size: 11px; color: #64748b;">
-            <strong>Prazos:</strong> Oncologia = 30 dias | Outras = 60 dias
-        </p>
-    </div>
 
-    <!-- REGRAS -->
-    <div class="section">
-        <div class="section-title">⚠️ Regras de Ouro</div>
-        <div class="alert-rules">
-            <p style="margin-bottom: 5px;">❌ Oftalmologia NÃO solicita retorno (fecha direto)</p>
-            <p style="margin-bottom: 5px;">❌ Portal NÃO cria novo número (fica no mesmo)</p>
-            <p style="margin-bottom: 5px;">❌ Não regride status (sistema nunca volta etapa)</p>
-            <p style="margin-bottom: 5px;">❌ Dados do paciente NÃO podem ser editados</p>
-            <p style="margin-bottom: 5px;">✅ Sincronize a planilha 2x ao dia</p>
-            <p>✅ Confira os alertas 🔴 TODOS os dias</p>
-        </div>
-    </div>
+            <!-- Distrito Perolandia -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Perolandia Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=1466188866#gid=1466188866" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
 
-    <!-- PROBLEMAS -->
-    <div class="section">
-        <div class="section-title">🆘 Problemas Comuns</div>
-        <div class="grid-2" style="font-size: 11px;">
-            <div class="info-box">
-                <strong>Dados não carregam?</strong>
-                <p>Clique em 🔄 ATUALIZAR</p>
+            <!-- Distrito Nacional -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Nacional Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=100420631#gid=100420631" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
-            <div class="info-box">
-                <strong>Esqueci a senha?</strong>
-                <p>🔑 Esqueci + código do gestor</p>
-            </div>
-            <div class="info-box">
-                <strong>Nº não encontrado?</strong>
-                <p>Confira se está RECEPCIONADA</p>
-            </div>
-            <div class="info-box">
-                <strong>Erro no Sincronizador?</strong>
-                <p>Verifique o cabeçalho da planilha</p>
-            </div>
-        </div>
-    </div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-        📞 SUPORTE: <a href="https://wa.me/5531984987116">(31) 98498-7116</a> 
-        | 📧 <a href="mailto:datadeshsolucoesdigitais@gmail.com">datadeshsolucoesdigitais@gmail.com</a>
-        <br><br>
-        💡 Sistema desenvolvido por Ana Paula Araújo da Silva | Mat: 201704
-    </div>
+            <!-- Distrito Ressaca -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Ressaca Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=735605400#gid=735605400" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Distrito Riacho -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Riacho Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=915546723#gid=915546723" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Distrito Sede -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Distrito Sede Fila para Ligações</div>
+                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=1370812175#gid=1370812175" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== TEMA 2: ARQUIVOS COM CONSOLIDADOS ===== -->
+    <section class="tema-section">
+        <div class="tema-header">
+            <div class="tema-icon"><i class="fas fa-chart-pie"></i></div>
+            <span class="tema-title">Arquivos com Consolidados</span>
+            <div class="tema-line"></div>
+        </div>
+
+        <div class="card-grid">
+
+            <!-- Arquivo Geral -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-clipboard-list"></i></div>
+                <div class="card-title">Arquivo Geral - Registro das Ligações</div>
+                <div class="card-desc">Registro de todas ligações por Distrito</div>
+                <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=2065378832#gid=2065378832" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Consolidado Ligações -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-chart-pie"></i></div>
+                <div class="card-title">Consolidado - Ligações</div>
+                <div class="card-desc">Quantitativo de Ligações por Distrito</div>
+                <a href="https://docs.google.com/spreadsheets/d/1rN0-ivzPW7ohL9FParc91SMsg7CXgjtVhs-g8VcLCi4/edit?gid=530334038#gid=530334038" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Controle de Agendamentos -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-clipboard-list"></i></div>
+                <div class="card-title">Controle de Agendamentos - Acesso Interno</div>
+                <div class="card-desc">Agendamentos Detalhado por Distrito</div>
+                <a href="https://docs.google.com/spreadsheets/d/11X7DQcngdN51yFYodEWBmMCc8Pi-YFbgQ4IQ7Ca93IU/edit?gid=0#gid=0" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Consolidado Agendamentos -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-brain"></i></div>
+                <div class="card-title">Consolidado Agendamentos</div>
+                <div class="card-desc">Quantitativo de Agendamentos por Distrito</div>
+                <a href="https://docs.google.com/spreadsheets/d/11X7DQcngdN51yFYodEWBmMCc8Pi-YFbgQ4IQ7Ca93IU/edit?gid=1603937153#gid=1603937153" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Requalificação da Neurologia -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
+                <div class="card-title">Requalificação da Neurologia</div>
+                <div class="card-desc">Pausado Temporariamente</div>
+                <a href="https://docs.google.com/spreadsheets/d/1ZwzPVQAifNLfJJO1lFr1BvQd6e6G3yC5C2H4Ry2N43k/edit?gid=621702727#gid=621702727" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== TEMA 3: LINKS DIVERSOS ===== -->
+    <section class="tema-section">
+        <div class="tema-header">
+            <div class="tema-icon"><i class="fas fa-link"></i></div>
+            <span class="tema-title">Links Diversos</span>
+            <div class="tema-line"></div>
+        </div>
+
+        <div class="card-grid">
+
+            <!-- Plataforma Feluma -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-hospital"></i></div>
+                <div class="card-title">Plataforma Feluma</div>
+                <div class="card-desc">Portal institucional Feluma</div>
+                <a href="https://portal-feluma.sydle.com/home" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Contatos UBS's -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+                <div class="card-title">Contatos UBS's</div>
+                <div class="card-desc">Lista completa de todas as UBS</div>
+                <a href="https://regulacaoconsolidados-dot.github.io/contatosdasubs/" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Pesquisa por Endereços -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-map-pin"></i></div>
+                <div class="card-title">Pesquisa por Endereços</div>
+                <div class="card-desc">Localize unidades por endereço</div>
+                <a href="https://app.powerbi.com/view?r=eyJrIjoiYTRiZDcyZWYtMzAwNS00NmYyLTk3N2EtYWEwYTk2NTFhMmY1IiwidCI6ImFlODYzMzdlLTU3NWUtNDMzMC05NDc2LTkzZGU2ODJiMDAyMCJ9" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Pesquisa por CNS -->
+            <div class="card">
+                <div class="card-icon-wrapper"><i class="fas fa-id-card"></i></div>
+                <div class="card-title">Pesquisa por CNS</div>
+                <div class="card-desc">Consulta ao Cartão Nacional de Saúde</div>
+                <a href="https://cnesadm.datasus.gov.br/cnesadm/publico/usuarios/cadastro" target="_blank" class="card-btn">
+                    Acessar <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== RODAPÉ ===== -->
+    <footer class="footer">
+        <div class="footer-brand">
+            <i class="fas fa-heartbeat"></i> Diretoria de Regulação do Acesso
+        </div>
+        <div class="footer-divider"></div>
+        <p>Todos os direitos reservados &copy; 2026</p>
+    </footer>
 
 </div>
 
