@@ -5,84 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Solicitação de Agendamento - Teleconsulta / Atenção Especializada</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* ===== RESET E BASE ===== */
+        /* ===== VARIÁVEIS ===== */
+        :root {
+            --azul-escuro: #0c326f;
+            --azul-principal: #1351b4;
+            --azul-medio: #2670e8;
+            --azul-claro: #5992ff;
+            --azul-bg: #eef4ff;
+            --cinza-bg: #f8f9fa;
+            --cinza-borda: #e6e8eb;
+            --cinza-texto: #4a5568;
+            --cinza-escuro: #1f2937;
+            --branco: #ffffff;
+        }
+
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
         }
 
         body {
-            background: radial-gradient(circle at 20% 20%, #eef5fc, #d9e6f2);
+            background: var(--cinza-bg);
             min-height: 100vh;
-            padding: 30px 20px;
+            padding: 24px 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            color: var(--cinza-escuro);
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1340px;
+            max-width: 1280px;
             width: 100%;
-            border-radius: 32px;
-            box-shadow: 0 30px 60px -20px rgba(10, 55, 94, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: var(--branco);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(12, 50, 111, 0.08);
             overflow: hidden;
+        }
+
+        /* ===== BARRA SUPERIOR FINA ===== */
+        .topbar {
+            background: var(--azul-escuro);
+            color: var(--branco);
+            padding: 8px 40px;
+            font-size: 0.78rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .topbar-left i {
+            color: var(--azul-claro);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            opacity: 0.85;
+        }
+
+        .topbar-right span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         /* ===== CABEÇALHO ===== */
         .header {
-            background: linear-gradient(135deg, #0a2e44 0%, #154a63 45%, #1d6a8a 100%);
-            color: white;
-            padding: 38px 44px;
+            background: var(--azul-principal);
+            color: var(--branco);
+            padding: 36px 40px;
             position: relative;
             overflow: hidden;
-            border-bottom: 4px solid rgba(255, 255, 255, 0.15);
         }
 
         .header::before {
             content: '';
             position: absolute;
-            top: -30%;
-            right: -10%;
-            width: 520px;
-            height: 520px;
-            background: radial-gradient(circle, rgba(120, 200, 255, 0.2) 0%, transparent 70%);
+            right: -60px;
+            top: -60px;
+            width: 260px;
+            height: 260px;
+            border: 40px solid rgba(255, 255, 255, 0.05);
             border-radius: 50%;
             pointer-events: none;
-            animation: float 12s infinite alternate ease-in-out;
         }
 
         .header::after {
             content: '';
             position: absolute;
-            bottom: -40%;
-            left: -5%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(100, 180, 240, 0.15) 0%, transparent 70%);
+            right: 120px;
+            bottom: -80px;
+            width: 180px;
+            height: 180px;
+            border: 30px solid rgba(255, 255, 255, 0.04);
             border-radius: 50%;
             pointer-events: none;
-            animation: float 15s infinite alternate-reverse ease-in-out;
-        }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, -30px) scale(1.1); }
         }
 
         .header-content {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
             position: relative;
-            z-index: 2;
-            gap: 20px;
+            z-index: 1;
         }
 
         .header-left {
@@ -92,528 +137,392 @@
         }
 
         .header-left .badge {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(8px);
-            padding: 6px 22px;
-            border-radius: 40px;
-            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 14px;
+            border-radius: 4px;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
+            letter-spacing: 1.5px;
+            font-weight: 700;
             align-self: flex-start;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #b8e2ff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-left: 3px solid var(--azul-claro);
         }
 
         .header h1 {
-            font-size: 2.4rem;
+            font-size: 1.85rem;
             font-weight: 800;
-            letter-spacing: -0.8px;
+            letter-spacing: -0.5px;
             line-height: 1.2;
-            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             gap: 14px;
         }
 
         .header h1 i {
-            color: #8fd6ff;
-            font-size: 2rem;
-            filter: drop-shadow(0 2px 8px rgba(80, 200, 255, 0.4));
+            font-size: 1.6rem;
+            color: #b3ccff;
         }
 
         .header .diretoria {
-            font-size: 1rem;
+            font-size: 0.92rem;
             font-weight: 500;
-            background: rgba(0, 0, 0, 0.25);
-            padding: 8px 24px;
-            border-radius: 40px;
-            display: inline-block;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #d4edff;
-            align-self: flex-start;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: #d6e4ff;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .header .diretoria i {
-            margin-right: 8px;
-            color: #8fd6ff;
+            color: #b3ccff;
         }
 
         .header-right {
-            text-align: right;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 16px 28px;
-            border-radius: 20px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s;
-        }
-
-        .header-right:hover {
-            background: rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
+            background: rgba(0, 0, 0, 0.15);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            border-left: 3px solid var(--azul-claro);
+            text-align: left;
         }
 
         .header-right .creditos {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            font-weight: 400;
-            color: #cde6ff;
             display: flex;
             align-items: center;
             gap: 8px;
-            white-space: nowrap;
+            color: #d6e4ff;
+            font-weight: 500;
         }
 
         .header-right .creditos i {
-            color: #8fd6ff;
+            color: var(--azul-claro);
         }
 
         /* ===== BARRA DE TÍTULO ===== */
         .page-title-bar {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(8px);
-            padding: 20px 44px;
-            border-left: 8px solid #1d6a8a;
-            border-right: 8px solid #1d6a8a;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            margin: 0 -1px;
-        }
-
-        .page-title-bar .title-main {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #0a2e44;
+            background: var(--azul-bg);
+            padding: 20px 40px;
+            border-bottom: 1px solid #d6e4ff;
             display: flex;
             align-items: center;
             gap: 14px;
-            letter-spacing: -0.3px;
         }
 
-        .page-title-bar .title-main i {
-            color: #1d6a8a;
-            background: #e1f0fa;
+        .page-title-bar i {
+            color: var(--azul-principal);
+            font-size: 1.1rem;
+            background: var(--branco);
             padding: 10px;
-            border-radius: 14px;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(19, 81, 180, 0.1);
+        }
+
+        .page-title-bar .title-main {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            letter-spacing: -0.2px;
         }
 
         /* ===== BOTÃO DESTAQUE ===== */
         .destaque-section {
-            padding: 40px 44px 10px 44px;
-            background: transparent;
+            padding: 32px 40px 8px 40px;
         }
 
         .destaque-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 18px;
             width: 100%;
-            padding: 26px 36px;
-            background: linear-gradient(135deg, #0a2e44 0%, #1a5a78 50%, #2a8ab0 100%);
-            color: white;
+            padding: 22px 28px;
+            background: linear-gradient(135deg, var(--azul-principal) 0%, var(--azul-medio) 100%);
+            color: var(--branco);
             text-decoration: none;
-            border-radius: 24px;
-            font-size: 1.3rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 16px 40px -8px rgba(26, 95, 122, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(19, 81, 180, 0.25);
             position: relative;
             overflow: hidden;
-            border: none;
+            border-left: 4px solid var(--azul-claro);
         }
 
-        .destaque-btn::before {
+        .destaque-btn::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.8s;
-        }
-
-        .destaque-btn:hover::before {
-            left: 100%;
+            top: 50%;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
         }
 
         .destaque-btn:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 24px 56px -8px rgba(26, 95, 122, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 26px rgba(19, 81, 180, 0.35);
         }
 
-        .destaque-btn i {
-            font-size: 1.8rem;
+        .destaque-btn .destaque-icon {
+            font-size: 1.5rem;
             background: rgba(255, 255, 255, 0.15);
-            padding: 14px;
-            border-radius: 18px;
-            backdrop-filter: blur(4px);
-            transition: all 0.3s;
-        }
-
-        .destaque-btn:hover i {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.02);
+            width: 54px;
+            height: 54px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .destaque-btn .destaque-text {
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
+            gap: 3px;
             flex: 1;
         }
 
         .destaque-btn .destaque-text .titulo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: -0.3px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: -0.2px;
         }
 
         .destaque-btn .destaque-text .subtitulo {
-            font-size: 0.9rem;
-            font-weight: 400;
-            opacity: 0.85;
-            letter-spacing: 0.2px;
+            font-size: 0.83rem;
+            color: #d6e4ff;
+            font-weight: 500;
         }
 
         .destaque-btn .arrow-icon {
-            background: rgba(255, 255, 255, 0.12);
-            padding: 12px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.1rem;
+            color: #b3ccff;
+            transition: transform 0.3s;
+            flex-shrink: 0;
         }
 
         .destaque-btn:hover .arrow-icon {
-            transform: translateX(8px);
-            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(6px);
+            color: var(--branco);
         }
 
         /* ===== SEÇÕES ===== */
         .tema-section {
-            padding: 0 44px;
+            padding: 8px 40px 0;
         }
 
         .tema-section:last-of-type {
-            padding-bottom: 48px;
+            padding-bottom: 40px;
         }
 
         .tema-header {
             display: flex;
             align-items: center;
-            gap: 18px;
-            padding: 42px 0 12px 0;
-            margin-bottom: 8px;
+            gap: 14px;
+            padding: 34px 0 14px 0;
+            border-bottom: 2px solid var(--azul-bg);
+            margin-bottom: 4px;
         }
 
         .tema-header .tema-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, #d4e9f7, #b8daf0);
-            border-radius: 18px;
+            width: 44px;
+            height: 44px;
+            background: var(--azul-principal);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            color: #0a2e44;
+            font-size: 1.1rem;
+            color: var(--branco);
             flex-shrink: 0;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
-            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(19, 81, 180, 0.25);
         }
 
-        .tema-header:hover .tema-icon {
-            transform: scale(1.05) rotate(-3deg);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-        }
-
-        /* ===== TEXTO DO TÓPICO DESTACADO EM AZUL ===== */
         .tema-header .tema-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #1d6a8a;
-            letter-spacing: -0.5px;
-            white-space: nowrap;
-            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
-        }
-
-        .tema-header .tema-line {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--azul-escuro);
+            letter-spacing: -0.3px;
             flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, #b8daf0, transparent);
-            border-radius: 4px;
-            margin-left: 12px;
         }
 
-        /* ===== GRADE DE CARDS ===== */
+        .tema-header .tema-count {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--azul-principal);
+            background: var(--azul-bg);
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid #d6e4ff;
+        }
+
+        /* ===== GRID DE CARDS ===== */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 28px;
-            padding: 24px 0 10px 0;
+            gap: 18px;
+            padding: 22px 0 8px 0;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 32px 24px 28px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: var(--branco);
+            border: 1px solid var(--cinza-borda);
+            border-radius: 10px;
+            padding: 22px 22px 20px;
+            transition: all 0.28s ease;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
             position: relative;
             overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #1d6a8a, #4aa8d0, #1d6a8a);
-            background-size: 200% 100%;
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .card:hover::before {
-            opacity: 1;
-            animation: shimmer 1.8s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+            border-left: 4px solid var(--azul-principal);
         }
 
         .card:hover {
-            transform: translateY(-10px) scale(1.01);
-            box-shadow: 0 24px 48px -12px rgba(26, 95, 122, 0.3), 0 0 0 1px rgba(255, 255, 255, 1) inset;
-            background: rgba(255, 255, 255, 0.95);
+            border-color: var(--azul-medio);
+            border-left-color: var(--azul-medio);
+            box-shadow: 0 10px 24px rgba(19, 81, 180, 0.12);
+            transform: translateY(-4px);
         }
 
-        .card-icon-wrapper {
-            width: 78px;
-            height: 78px;
-            background: linear-gradient(135deg, #e1f0fa, #cce4f5);
-            border-radius: 50%;
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .card-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--azul-bg);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
-            color: #1d6a8a;
-            margin-bottom: 18px;
-            transition: all 0.4s;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+            font-size: 1.05rem;
+            color: var(--azul-principal);
+            flex-shrink: 0;
+            transition: all 0.3s;
         }
 
-        .card:hover .card-icon-wrapper {
-            background: linear-gradient(135deg, #1d6a8a, #2a8ab0);
-            color: white;
-            transform: scale(1.08) rotate(3deg);
-            box-shadow: 0 16px 32px rgba(26, 95, 122, 0.3);
+        .card:hover .card-icon {
+            background: var(--azul-principal);
+            color: var(--branco);
         }
 
         .card-title {
+            font-size: 0.98rem;
             font-weight: 700;
-            font-size: 1.1rem;
-            color: #0a2e44;
-            margin-bottom: 10px;
+            color: var(--azul-escuro);
             line-height: 1.35;
-            min-height: 52px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             letter-spacing: -0.2px;
+            flex: 1;
         }
 
         .card-desc {
-            font-size: 0.85rem;
-            color: #6a7e8e;
-            margin-bottom: 22px;
+            font-size: 0.82rem;
+            color: var(--cinza-texto);
             line-height: 1.5;
-            min-height: 42px;
-            font-weight: 400;
+            margin-bottom: 18px;
+            flex: 1;
         }
 
         .card-btn {
-            background: white;
-            color: #1d6a8a;
-            border: 2px solid #cce4f5;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.35s;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            width: 100%;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-            letter-spacing: 0.3px;
+            gap: 8px;
+            padding: 10px 18px;
+            background: var(--azul-bg);
+            color: var(--azul-principal);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.83rem;
+            font-weight: 700;
+            border: 1px solid #d6e4ff;
+            transition: all 0.28s;
+            letter-spacing: 0.2px;
         }
 
         .card-btn i {
-            font-size: 0.85rem;
-            transition: transform 0.35s;
+            font-size: 0.75rem;
+            transition: transform 0.28s;
         }
 
         .card-btn:hover {
-            background: #1d6a8a;
-            color: white;
-            border-color: #1d6a8a;
-            box-shadow: 0 12px 28px -6px rgba(26, 95, 122, 0.4);
-            transform: scale(1.02);
+            background: var(--azul-principal);
+            color: var(--branco);
+            border-color: var(--azul-principal);
         }
 
         .card-btn:hover i {
-            transform: translateX(5px);
-        }
-
-        /* Variações de cor nos cards */
-        .card:nth-child(3n+1) .card-icon-wrapper {
-            background: linear-gradient(135deg, #fef3e8, #fde0c8);
-            color: #b86a2a;
-        }
-        .card:nth-child(3n+1):hover .card-icon-wrapper {
-            background: linear-gradient(135deg, #b86a2a, #d88a4a);
-            color: white;
-        }
-
-        .card:nth-child(3n+2) .card-icon-wrapper {
-            background: linear-gradient(135deg, #e8f4e8, #d0e8d8);
-            color: #2a7a5a;
-        }
-        .card:nth-child(3n+2):hover .card-icon-wrapper {
-            background: linear-gradient(135deg, #2a7a5a, #3a9a6a);
-            color: white;
-        }
-
-        .card:nth-child(3n+3) .card-icon-wrapper {
-            background: linear-gradient(135deg, #f0e8fc, #e4d8f8);
-            color: #6a3a9c;
-        }
-        .card:nth-child(3n+3):hover .card-icon-wrapper {
-            background: linear-gradient(135deg, #6a3a9c, #8a5abc);
-            color: white;
+            transform: translateX(4px);
         }
 
         /* ===== RODAPÉ ===== */
         .footer {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(8px);
-            padding: 32px 44px;
-            border-radius: 0 0 32px 32px;
+            background: var(--azul-escuro);
+            color: var(--branco);
+            padding: 26px 40px;
             text-align: center;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.02);
-            border-top: 1px solid rgba(255, 255, 255, 0.9);
         }
 
         .footer .footer-brand {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #0a2e44;
-            letter-spacing: -0.3px;
+            font-size: 1rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            margin-bottom: 6px;
         }
 
         .footer .footer-brand i {
-            color: #1d6a8a;
-            font-size: 1.4rem;
-        }
-
-        .footer .footer-divider {
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, #1d6a8a, #4aa8d0, transparent);
-            margin: 12px auto;
-            border-radius: 4px;
+            color: var(--azul-claro);
         }
 
         .footer p {
-            color: #6a7e8e;
-            font-size: 0.85rem;
-            font-weight: 400;
+            font-size: 0.78rem;
+            color: #b3ccff;
+            opacity: 0.85;
         }
 
         /* ===== RESPONSIVIDADE ===== */
-        @media (max-width: 1024px) {
-            .container { border-radius: 28px; }
-            .header { padding: 30px 32px; }
-            .header h1 { font-size: 2rem; }
-            .destaque-section,
-            .tema-section { padding-left: 32px; padding-right: 32px; }
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 16px; }
-            .container { border-radius: 24px; }
-            .header { padding: 26px 24px; }
-            .header-content { flex-direction: column; align-items: flex-start; gap: 18px; }
-            .header-right { text-align: left; width: 100%; padding: 14px 20px; }
-            .header h1 { font-size: 1.6rem; }
-            .header h1 i { font-size: 1.4rem; }
-            .page-title-bar { padding: 16px 24px; flex-direction: column; align-items: flex-start; }
-            .page-title-bar .title-main { font-size: 1.15rem; }
-            .destaque-section { padding: 28px 20px 0 20px; }
-            .destaque-btn { padding: 20px 24px; font-size: 1.1rem; flex-wrap: wrap; gap: 12px; }
-            .destaque-btn .destaque-text .titulo { font-size: 1.1rem; }
-            .destaque-btn .destaque-text .subtitulo { font-size: 0.8rem; }
-            .tema-section { padding: 0 20px; }
+        @media (max-width: 900px) {
+            .header { padding: 28px 24px; }
+            .header h1 { font-size: 1.5rem; }
+            .topbar { padding: 8px 24px; }
+            .topbar-right { display: none; }
+            .page-title-bar { padding: 18px 24px; }
+            .destaque-section { padding: 26px 24px 8px 24px; }
+            .tema-section { padding: 8px 24px 0; }
             .tema-section:last-of-type { padding-bottom: 32px; }
-            .tema-header .tema-title { font-size: 1.2rem; }
-            .tema-header .tema-icon { width: 46px; height: 46px; font-size: 1.2rem; }
-            .card-grid { padding: 16px 0 6px 0; gap: 22px; }
-            .card { padding: 26px 20px 22px; }
-            .footer { padding: 24px 20px; }
+            .footer { padding: 22px 24px; }
         }
 
-        @media (max-width: 480px) {
-            body { padding: 10px; }
-            .container { border-radius: 20px; }
-            .header { padding: 20px 18px; }
-            .header h1 { font-size: 1.2rem; flex-direction: column; align-items: flex-start; gap: 8px; }
-            .header h1 i { font-size: 1.2rem; }
-            .header .badge { font-size: 0.65rem; padding: 4px 14px; }
-            .header .diretoria { font-size: 0.85rem; padding: 6px 16px; }
+        @media (max-width: 600px) {
+            body { padding: 12px 10px; }
+            .container { border-radius: 8px; }
+            .header { padding: 22px 18px; }
+            .header-content { flex-direction: column; align-items: flex-start; }
+            .header-right { width: 100%; }
+            .header h1 { font-size: 1.25rem; }
+            .header h1 i { font-size: 1.15rem; }
+            .topbar { padding: 8px 16px; font-size: 0.7rem; }
+            .page-title-bar { padding: 16px 18px; }
             .page-title-bar .title-main { font-size: 1rem; }
-            .card-grid { grid-template-columns: 1fr; padding: 12px 0; }
-            .destaque-btn { flex-direction: column; text-align: center; padding: 24px 18px; }
-            .destaque-btn .destaque-text { align-items: center; }
-            .destaque-btn .arrow-icon { margin-left: 0; }
-            .tema-header { flex-wrap: wrap; gap: 12px; }
-            .tema-header .tema-line { display: none; }
-            .footer .footer-brand { font-size: 1rem; flex-direction: column; gap: 6px; }
+            .destaque-section { padding: 20px 18px 8px 18px; }
+            .destaque-btn { padding: 18px 20px; gap: 12px; flex-wrap: wrap; }
+            .destaque-btn .destaque-text .titulo { font-size: 1rem; }
+            .tema-section { padding: 8px 18px 0; }
+            .tema-section:last-of-type { padding-bottom: 28px; }
+            .tema-header { padding: 26px 0 12px 0; gap: 10px; }
+            .tema-header .tema-title { font-size: 1.05rem; }
+            .tema-header .tema-icon { width: 38px; height: 38px; font-size: 0.95rem; }
+            .tema-header .tema-count { font-size: 0.68rem; padding: 4px 9px; }
+            .card-grid { grid-template-columns: 1fr; padding: 18px 0 6px 0; gap: 14px; }
+            .card { padding: 18px; }
+            .footer { padding: 20px 18px; }
         }
     </style>
 </head>
@@ -621,32 +530,42 @@
 
 <div class="container">
 
+    <!-- ===== BARRA SUPERIOR ===== -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <i class="fas fa-shield-alt"></i>
+            <span>Diretoria de Regulação do Acesso</span>
+        </div>
+        <div class="topbar-right">
+            <span><i class="fas fa-phone-alt"></i> Teleconsulta</span>
+            <span><i class="fas fa-clock"></i> Atendimento: Seg–Sex</span>
+        </div>
+    </div>
+
     <!-- ===== CABEÇALHO ===== -->
     <header class="header">
         <div class="header-content">
             <div class="header-left">
-                <span class="badge"><i class="fas fa-phone-alt"></i> Links Rápido — Teleconsulta</span>
+                <span class="badge"><i class="fas fa-link"></i> Links Rápidos — Teleconsulta</span>
                 <h1><i class="fas fa-calendar-check"></i>Diretoria de Regulação do Acesso</h1>
-                <span class="diretoria"><i class="fas fa-building"></i> Diretora: Paloma Morais</span>
+                <span class="diretoria"><i class="fas fa-user-tie"></i> Diretora: Paloma Morais</span>
             </div>
             <div class="header-right">
-                <div class="creditos"><i class="fas fa-code"></i> Página criada por Ana Paula Araújo da Silva — Matric. 201704</div>
+                <div class="creditos"><i class="fas fa-code"></i> Ana Paula Araújo da Silva — Matric. 201704</div>
             </div>
         </div>
     </header>
 
     <!-- ===== BARRA DE TÍTULO ===== -->
     <div class="page-title-bar">
-        <div class="title-main">
-            <i class="fas fa-th-large"></i>
-            Teleconsulta — Arquivos e Ferramentas
-        </div>
+        <i class="fas fa-th-large"></i>
+        <span class="title-main">Teleconsulta — Arquivos e Ferramentas</span>
     </div>
 
     <!-- ===== BOTÃO DESTAQUE ===== -->
     <div class="destaque-section">
         <a href="https://docs.google.com/spreadsheets/d/1_WJhJQQXcxn0Yucyr_rv_HuKs7wc3p4oeb69oyhoPU4/edit?gid=119359330#gid=119359330" target="_blank" class="destaque-btn">
-            <i class="fas fa-pen-fancy"></i>
+            <div class="destaque-icon"><i class="fas fa-pen-fancy"></i></div>
             <div class="destaque-text">
                 <span class="titulo">Reaproveitamento Teleconsulta</span>
                 <span class="subtitulo">Oferta por Distrito — Acesse aqui</span>
@@ -660,78 +579,94 @@
         <div class="tema-header">
             <div class="tema-icon"><i class="fas fa-phone-volume"></i></div>
             <span class="tema-title">Planilhas para Ligações por Distrito</span>
-            <div class="tema-line"></div>
+            <span class="tema-count">8 distritos</span>
         </div>
 
         <div class="card-grid">
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Eldorado Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Eldorado — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=175443153#gid=175443153" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Industrial Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Industrial — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=1574171907#gid=1574171907" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Vargem das Flores Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Vargem das Flores — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=450560883#gid=450560883" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Perolandia Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Perolandia — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=1466188866#gid=1466188866" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Nacional Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Nacional — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=100420631#gid=100420631" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Ressaca Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Ressaca — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=735605400#gid=735605400" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Riacho Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Riacho — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=915546723#gid=915546723" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Distrito Sede Fila para Ligações</div>
-                <div class="card-desc">Lista de espera para contato telefônico</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="card-title">Distrito Sede — Fila para Ligações</div>
+                </div>
+                <div class="card-desc">Lista de espera para contato telefônico.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=1370812175#gid=1370812175" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
@@ -745,51 +680,61 @@
         <div class="tema-header">
             <div class="tema-icon"><i class="fas fa-chart-pie"></i></div>
             <span class="tema-title">Arquivos com Consolidados</span>
-            <div class="tema-line"></div>
+            <span class="tema-count">5 arquivos</span>
         </div>
 
         <div class="card-grid">
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-clipboard-list"></i></div>
-                <div class="card-title">Arquivo Geral — Registro das Ligações</div>
-                <div class="card-desc">Registro de todas ligações por Distrito</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="card-title">Arquivo Geral — Registro das Ligações</div>
+                </div>
+                <div class="card-desc">Registro de todas ligações por Distrito.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1NrLJ7ulMx93VXse-k8C4PX7FkGPLEZ0yTQSIVQeNItg/edit?gid=2065378832#gid=2065378832" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-chart-pie"></i></div>
-                <div class="card-title">Consolidado — Ligações</div>
-                <div class="card-desc">Quantitativo de Ligações por Distrito</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+                    <div class="card-title">Consolidado — Ligações</div>
+                </div>
+                <div class="card-desc">Quantitativo de Ligações por Distrito.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1rN0-ivzPW7ohL9FParc91SMsg7CXgjtVhs-g8VcLCi4/edit?gid=530334038#gid=530334038" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-clipboard-list"></i></div>
-                <div class="card-title">Controle de Agendamentos — Acesso Interno</div>
-                <div class="card-desc">Agendamentos Detalhado por Distrito</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="card-title">Controle de Agendamentos — Acesso Interno</div>
+                </div>
+                <div class="card-desc">Agendamentos detalhados por Distrito.</div>
                 <a href="https://docs.google.com/spreadsheets/d/11X7DQcngdN51yFYodEWBmMCc8Pi-YFbgQ4IQ7Ca93IU/edit?gid=0#gid=0" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-brain"></i></div>
-                <div class="card-title">Consolidado Agendamentos</div>
-                <div class="card-desc">Quantitativo de Agendamentos por Distrito</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-brain"></i></div>
+                    <div class="card-title">Consolidado — Agendamentos</div>
+                </div>
+                <div class="card-desc">Quantitativo de Agendamentos por Distrito.</div>
                 <a href="https://docs.google.com/spreadsheets/d/11X7DQcngdN51yFYodEWBmMCc8Pi-YFbgQ4IQ7Ca93IU/edit?gid=1603937153#gid=1603937153" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-volume"></i></div>
-                <div class="card-title">Requalificação da Neurologia</div>
-                <div class="card-desc">Pausado Temporariamente</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-pause-circle"></i></div>
+                    <div class="card-title">Requalificação da Neurologia</div>
+                </div>
+                <div class="card-desc">Pausado temporariamente.</div>
                 <a href="https://docs.google.com/spreadsheets/d/1ZwzPVQAifNLfJJO1lFr1BvQd6e6G3yC5C2H4Ry2N43k/edit?gid=621702727#gid=621702727" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
@@ -803,42 +748,50 @@
         <div class="tema-header">
             <div class="tema-icon"><i class="fas fa-link"></i></div>
             <span class="tema-title">Links Diversos</span>
-            <div class="tema-line"></div>
+            <span class="tema-count">4 links</span>
         </div>
 
         <div class="card-grid">
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-hospital"></i></div>
-                <div class="card-title">Plataforma Feluma</div>
-                <div class="card-desc">Portal institucional Feluma</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-hospital"></i></div>
+                    <div class="card-title">Plataforma Feluma</div>
+                </div>
+                <div class="card-desc">Portal institucional Feluma.</div>
                 <a href="https://portal-feluma.sydle.com/home" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
-                <div class="card-title">Contatos UBS's</div>
-                <div class="card-desc">Lista completa de todas as UBS</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="card-title">Contatos UBS's</div>
+                </div>
+                <div class="card-desc">Lista completa de todas as UBS.</div>
                 <a href="https://regulacaoconsolidados-dot.github.io/contatosdasubs/" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-map-pin"></i></div>
-                <div class="card-title">Pesquisa por Endereços</div>
-                <div class="card-desc">Localize unidades por endereço</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-map-pin"></i></div>
+                    <div class="card-title">Pesquisa por Endereços</div>
+                </div>
+                <div class="card-desc">Localize unidades por endereço.</div>
                 <a href="https://app.powerbi.com/view?r=eyJrIjoiYTRiZDcyZWYtMzAwNS00NmYyLTk3N2EtYWEwYTk2NTFhMmY1IiwidCI6ImFlODYzMzdlLTU3NWUtNDMzMC05NDc2LTkzZGU2ODJiMDAyMCJ9" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
 
             <div class="card">
-                <div class="card-icon-wrapper"><i class="fas fa-id-card"></i></div>
-                <div class="card-title">Pesquisa por CNS</div>
-                <div class="card-desc">Consulta ao Cartão Nacional de Saúde</div>
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-id-card"></i></div>
+                    <div class="card-title">Pesquisa por CNS</div>
+                </div>
+                <div class="card-desc">Consulta ao Cartão Nacional de Saúde.</div>
                 <a href="https://cnesadm.datasus.gov.br/cnesadm/publico/usuarios/cadastro" target="_blank" class="card-btn">
                     Acessar <i class="fas fa-arrow-right"></i>
                 </a>
@@ -852,7 +805,6 @@
         <div class="footer-brand">
             <i class="fas fa-heartbeat"></i> Diretoria de Regulação do Acesso
         </div>
-        <div class="footer-divider"></div>
         <p>Todos os direitos reservados &copy; 2026</p>
     </footer>
 
